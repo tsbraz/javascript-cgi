@@ -64,7 +64,7 @@ HTTPResponse.prototype.setHeader = HTTPResponse.prototype.addHeader;
 
 HTTPResponse.prototype.printHeader = function() {
     if (this.writer == null) {
-        this.getWriter();
+        throw "Writer not acquired";
     }
     if (this.header != null) {
         for (var i in this.header) {
@@ -80,7 +80,7 @@ HTTPResponse.prototype.printHeader = function() {
 
 HTTPResponse.prototype.getWriter = function() {
     if (this.writer == null) {
-        this.writer = Utils.IO.createPrintStream(Environment.systemStdOut);
+        this.writer = Environment.systemStdOut;
         this.printHeader();
         this.responseCommited = true;
     }
@@ -146,7 +146,7 @@ HTTPRequest.prototype.dispatch = function(uri) {
         }
         this.checkDispatchResponse(dispatchResponse);
     } else {
-        response.sendError(response.status.INTERNAL_SERVER_ERROR);
+        this.response.sendError(this.response.status.NOT_IMPLEMENTED);
     }
 }
 
