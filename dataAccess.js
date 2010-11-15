@@ -3,7 +3,10 @@ DataAccess = function() {
 
 DataAccess.prototype.getConnection = function() {
     if (this.connection === undefined) {
-        this.connection = this.createNewConnection();
+        if (DataAccess.connection === undefined) {
+            DataAccess.connection = this.createNewConnection();
+        }
+        this.connection = DataAccess.connection;
     }
     return this.connection;
 }

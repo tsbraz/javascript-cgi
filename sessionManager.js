@@ -33,6 +33,13 @@ SessionManager = function(request, response) {
 
 SessionManager.prototype = new DataAccess();
 
+SessionManager.prototype.getConnection = function() {
+    if (this.connection === undefined) {
+        this.connection = this.createNewConnection();
+    }
+    return this.connection;
+}
+
 SessionManager.prototype.getCookieId = function() {
     var cookies = this.request.getHeader("HTTP_COOKIE");
     if (cookies != null) {
