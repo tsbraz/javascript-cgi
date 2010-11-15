@@ -2,8 +2,8 @@
 loader = {
     async: true,
     
-    exceptionHandler: function() {
-        // do nothing
+    exceptionHandler: function(o, statusText) {
+        alert(statusText + "\n" + o);
     },
     
     get: function(param, url, callback, async) {
@@ -58,7 +58,7 @@ loader = {
                 if (request.status == 200) {
                     callback = loader._getFunction(callback);
                 } else {
-                    callback = loader._getFunction(loader.exceptionHandler);
+                    callback = loader._getFunction(loader.exceptionHandler, request.statusText);
                 }
                 callback(response);
             }
