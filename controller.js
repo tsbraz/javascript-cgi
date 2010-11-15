@@ -142,6 +142,8 @@ HTTPRequest.prototype.dispatch = function() {
             dispatchResponse = get(this, this.response);
         } else if (method == "POST") {
             dispatchResponse = post(this, this.response);
+        } else if (method == "DELETE") {
+            dispatchResponse = del(this, this.response);
         }
         this.checkDispatchResponse(dispatchResponse);
     } else {
