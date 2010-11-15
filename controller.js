@@ -348,7 +348,11 @@ HTTPRequest.prototype.getRequestURIAtLevel = function(i) {
     if (this.splitURI === undefined) {
         this.splitURI = this.requestURI.substring(1).split("/");
     }
-    return this.splitURI[i];
+    if (i < this.splitURI.length) {
+        return this.splitURI[i];
+    } else {
+        return null;
+    }
 }
 
 HTTPRequest.prototype.getDocumentRoot = function() {
