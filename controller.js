@@ -113,8 +113,8 @@ HTTPResponse.prototype.sendError = function(status) {
 HTTPRequest = function() {
     this.setQueryString(this.getHeader("QUERY_STRING"));
     this.readStdInContent();
-    var requestURI = this.getHeader("REQUEST_URI");
-    this.dispatch(requestURI);
+    this.requestURI = this.getHeader("REQUEST_URI");
+    this.dispatch();
 }
 
 HTTPRequest.prototype.checkDispatchResponse = function(dispatchResponse) {
@@ -130,9 +130,8 @@ HTTPRequest.prototype.checkDispatchResponse = function(dispatchResponse) {
     }
 }
 
-HTTPRequest.prototype.dispatch = function(uri) {
-    uri = uri.substring(1).split("/");
-    var scriptFile = uri[0] + ".js";
+HTTPRequest.prototype.dispatch = function() {
+    var scriptFile = this.getRequestURIAtLevel(0) + "code/";
     var documentRoot = this.getDocumentRoot() + "code/";
     var method = this.getMethod();
     this.response = new HTTPResponse();
@@ -342,7 +341,14 @@ HTTPRequest.prototype.getContentLength = function() {
 }
 
 HTTPRequest.prototype.getRequestURI = function() {
-    return this.getHeader("REQUEST_URI");
+    return this.requestURI;
+}
+
+HTTPRequest.prototype.getRequestURIAtLevel = function(i) {
+    if (this.splitURI === undefined) {
+        this.splitURI = this.requestURI.substring(1).split("/");
+    }
+    return this.splitURI[i];
 }
 
 HTTPRequest.prototype.getDocumentRoot = function() {
