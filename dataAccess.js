@@ -38,7 +38,7 @@ DataAccess.prototype.mappedQuery = function(pstmt, queryMap) {
                     if (paramValue == null) {
                         pstmt.setNull(param[i], java.sql.Types.NUMERIC);
                     } else {
-                        pstmt.setInt(param[i], paramValue);
+                        pstmt.setLong(param[i], paramValue);
                     }
                 }
             } else {
